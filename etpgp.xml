@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TPIN_ServiceRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://etpgp.rzd.ru/schema/4.0/TPIN_Service.xsd">
+    <freight>
+        <fr_code>%cargo_type_code%</fr_code>
+        <weight>%cargo_weight%</weight>
+        <volume>%cargo_volume%</volume>
+        <packTypeID>%cargo_package_type_code%</packTypeID>
+    </freight>
+    <startDate>%start_date%</startDate>
+    <finishDate>%finish_date%</finishDate>
+    <sndStation>
+        <stCode>%departure_station_code%</stCode>
+    </sndStation>
+    <rsvStation>
+        <stCode>%destination_station_code%</stCode>
+    </rsvStation>
+    <wag>
+        <wagTypeID>%wagon_type_code%</wagTypeID>
+        <wagCount>1</wagCount>
+    </wag>
+</TPIN_ServiceRequest>

@@ -1,0 +1,77 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsp="http://www.w3.org/ns/ws-policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:wsrm="http://docs.oasis-open.org/ws-rx/wsrmp/200702"
+    xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service"
+    xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service"
+    xmlns:wsp1="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" name="ServiceCISS"
+    targetNamespace="http://tempuri.org/">
+    <message name="SendBlockRequest">
+        <part name="Text" type="xs:string"/>
+    </message>
+    <message name="SendBlockResponse">
+        <part name="return" type="xs:boolean"/>
+    </message>
+    <message name="GetBlockRequest">
+        <part name="login" type="xs:string"/>
+        <part name="password" type="xs:string"/>
+        <part name="text" type="xs:string"/>
+    </message>
+    <message name="GetBlockResponse">
+        <part name="return" type="xs:boolean"/>
+        <part name="text" type="xs:string"/>
+    </message>
+    <portType name="SysCISS">
+        <operation name="SendBlock">
+            <input message="tns:SendBlockRequest"/>
+            <output message="tns:SendBlockResponse"/>
+        </operation>
+        <operation name="GetBlock">
+            <input message="tns:GetBlockRequest"/>
+            <output message="tns:GetBlockResponse"/>
+        </operation>
+    </portType>
+    <binding name="SysCISSbinding" type="tns:SysCISS">
+        <wsp1:PolicyReference URI="#SysCISSbindingPolicy"/>
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="SendBlock">
+            <soap:operation soapAction="urn:nsCISS" style="rpc"/>
+            <input>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="nsCISS"/>
+            </input>
+            <output>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="nsCISS"/>
+            </output>
+        </operation>
+        <operation name="GetBlock">
+            <soap:operation soapAction="urn:nsCISS" style="rpc"/>
+            <input>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="nsCISS"/>
+            </input>
+            <output>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="nsCISS"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="ServiceCISS">
+        <port name="SysCISSPort" binding="tns:SysCISSbinding">
+            <soap:address location=" https://etptest.intellex.ru/AppServer/ServiceCISS"/>
+        </port>
+    </service>
+    <wsp1:Policy wsu:Id="SysCISSbindingPolicy">
+        <wsp1:ExactlyOne>
+            <wsp1:All/>
+        </wsp1:ExactlyOne>
+    </wsp1:Policy>
+    <jaxws:bindings>
+        <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
+    </jaxws:bindings>
+</definitions>
